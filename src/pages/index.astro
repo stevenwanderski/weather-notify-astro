@@ -1,19 +1,21 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 
-import { prisma } from "../lib/prisma";
-import { actions } from "astro:actions";
+// import { prisma } from "../lib/prisma";
+// import { actions } from "astro:actions";
 
 // Fetch all items from DB
-const items = await prisma.item.findMany({
-  orderBy: { id: "desc" },
-});
+// const items = await prisma.item.findMany({
+//   orderBy: { id: "desc" },
+// });
 
-const result = Astro.getActionResult(actions.addItem);
+// const result = Astro.getActionResult(actions.addItem);
 
-if (result && !result.error) {
-  return Astro.redirect('/');
-}
+// if (result && !result.error) {
+//   return Astro.redirect('/');
+// }
+
+const items:any[] = [];
 ---
 
 <Layout>
@@ -28,7 +30,7 @@ if (result && !result.error) {
       </p>
 
       <div class="mb-10">
-        <form method="post" action={actions.addItem}>
+        <form method="post" action="">
           <div class="mb-4">
             <label for="name" class="label">Name</label>
             <input type="text" name="name" id="name" class="input">

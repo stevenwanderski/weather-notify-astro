@@ -1,5 +1,5 @@
 #!/bin/bash
 cd /home/ec2-user/weather-notify-astro
 git pull origin main
-npm install --force
+npm install --legacy-peer-deps
 sudo systemctl restart weather-notify-astro

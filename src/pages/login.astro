@@ -1,0 +1,50 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { actions } from "astro:actions";
+
+const errors = { username: "", password: "" };
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("username");
+    const password = data.get("password");
+
+    if (typeof name !== "string" || name.length < 1) {
+      errors.username += "Please enter a username.";
+    }
+
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+
+<Layout>
+  <div class="container mx-auto">
+    <div class="max-w-4xl py-10">
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-10">
+        Login.
+      </h1>
+
+      <div class="mb-10">
+        <form method="POST" action="" class="max-w-[400px]">
+          <div class="mb-4">
+            <label for="username" class="label">Username</label>
+            <input type="text" name="username" id="username" class="input">
+            {errors.username && <p class="text-red-500 text-sm mt-1">{errors.username}</p>}
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="label">Password</label>
+            <input type="text" name="password" id="password" class="input">
+          </div>
+
+          <button class="btn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</Layout>

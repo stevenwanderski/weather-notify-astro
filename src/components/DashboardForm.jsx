@@ -53,6 +53,7 @@ export default function DashboardForm({ user }) {
               id="time"
               className="select"
               onChange={(e) => setTime(e.target.value)}
+              defaultValue={user.time}
             >
               <option value="08:00">8:00am</option>
               <option value="09:00">9:00am</option>

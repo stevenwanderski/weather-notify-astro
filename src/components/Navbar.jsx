@@ -1,0 +1,30 @@
+import { navigate } from "astro:transitions/client";
+import { authClient } from "@/lib/auth-client";
+
+export default function Navbar({ email }) {
+  const logout = () => {
+    authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          navigate("/login");
+        },
+      },
+    })
+  }
+
+  return (
+    <div className="bg-zinc-900">
+      <div className="container mx-auto py-4">
+        <div className="flex items-center justify-between text-white">
+          <div>
+            {email}
+          </div>
+
+          <div>
+            <button className="btn !bg-zinc-700" type="button" onClick={logout}>Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

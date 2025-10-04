@@ -1,9 +1,12 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import { actions } from "astro:actions";
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+
+if (!Astro.locals.session) {
+  return Astro.redirect("/login");
+}
 ---
 
-<Layout>
+<DashboardLayout>
   <div class="container mx-auto">
     <div class="max-w-4xl py-10">
       <div class="mb-10">
@@ -17,4 +20,4 @@ import { actions } from "astro:actions";
       </div>
     </div>
   </div>
-</Layout>
+</DashboardLayout>

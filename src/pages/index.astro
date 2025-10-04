@@ -1,18 +1,5 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-
-import { prisma } from "../lib/prisma";
-import { actions } from "astro:actions";
-
-const items = await prisma.item.findMany({
-  orderBy: { id: "desc" },
-});
-
-const result = Astro.getActionResult(actions.addItem);
-
-if (result && !result.error) {
-  return Astro.redirect('/');
-}
 ---
 
 <Layout>

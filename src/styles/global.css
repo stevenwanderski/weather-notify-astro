@@ -9,7 +9,7 @@
 }
 
 .btn {
-  @apply rounded-md bg-zinc-900 px-5 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600
+  @apply rounded-md bg-zinc-900 px-5 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-zinc-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:bg-zinc-500 disabled:hover:bg-zinc-500 disabled:cursor-wait
 }
 
 .select {

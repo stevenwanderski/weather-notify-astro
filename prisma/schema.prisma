@@ -23,6 +23,9 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  city          String?
+  time          String?
+  notificationsEnabled Boolean @default(true)
 
   @@unique([email])
   @@map("user")

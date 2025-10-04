@@ -1,9 +1,9 @@
 import { navigate } from "astro:transitions/client";
-import { authClient } from "@/lib/auth-client";
+import { signOut } from "@/lib/auth-client";
 
 export default function Navbar({ email }) {
   const logout = () => {
-    authClient.signOut({
+    signOut({
       fetchOptions: {
         onSuccess: () => {
           navigate("/login");

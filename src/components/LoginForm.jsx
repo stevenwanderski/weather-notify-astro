@@ -52,10 +52,16 @@ export default function LoginForm() {
             <input type="text" name="password" id="password" className="input" />
           </div>
 
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-6">
             <button className="btn" disabled={loading}>Submit</button>
 
             <a href="/register" className="hover:underline text-sm">Create an account</a>
+          </div>
+
+          <hr className="border-0 border-b border-zinc-200 mb-6" />
+
+          <div className="flex justify-start items-center">
+            <a href="/request-password" className="hover:underline text-sm">Forgot password?</a>
           </div>
         </form>
       </div>

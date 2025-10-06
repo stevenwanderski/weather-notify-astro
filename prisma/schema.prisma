@@ -26,6 +26,12 @@ model User {
   city          String?
   time          String?
   notificationsEnabled Boolean @default(true)
+  // the timestamp when we last sent a forecast email to this user
+  // used to ensure at-most-one email per user per day
+  lastEmailSentAt DateTime?
+  // temporary reservation timestamp to indicate a pending send in progress
+  // allows cron job to atomically reserve users and clear the reservation if sending fails
+  lastEmailReservedAt DateTime?
 
   @@unique([email])
   @@map("user")

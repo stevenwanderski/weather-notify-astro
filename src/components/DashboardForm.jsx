@@ -55,9 +55,32 @@ export default function DashboardForm({ user }) {
               onChange={(e) => setTime(e.target.value)}
               defaultValue={user.time}
             >
-              <option value="08:00">8:00am</option>
-              <option value="09:00">9:00am</option>
+              <option value="0">12:00am</option>
+              <option value="1">1:00am</option>
+              <option value="2">2:00am</option>
+              <option value="3">3:00am</option>
+              <option value="4">4:00am</option>
+              <option value="5">5:00am</option>
+              <option value="6">6:00am</option>
+              <option value="7">7:00am</option>
+              <option value="8">8:00am</option>
+              <option value="9">9:00am</option>
+              <option value="10">10:00am</option>
+              <option value="11">11:00am</option>
+              <option value="12">12:00pm</option>
+              <option value="13">1:00pm</option>
+              <option value="14">2:00pm</option>
+              <option value="15">3:00pm</option>
+              <option value="16">4:00pm</option>
+              <option value="17">5:00pm</option>
+              <option value="18">6:00pm</option>
+              <option value="19">7:00pm</option>
+              <option value="20">8:00pm</option>
+              <option value="21">9:00pm</option>
+              <option value="22">10:00pm</option>
+              <option value="23">11:00pm</option>
             </select>
+
             <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400">
               <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" fillRule="evenodd" />
             </svg>

@@ -9,7 +9,11 @@ function getLocalStartOfDay(d) {
 
 async function main() {
   const now = new Date();
-  const currentHour = now.getHours(); // e.g. 14 for 2PM
+
+  const currentHour = Number(
+    new Intl.DateTimeFormat('en-US', { hour: 'numeric', hour12: false, timeZone: 'America/Chicago' }).format(now)
+  );
+
   console.log(`[${now.toISOString()}] Running hourly notification check (hour=${currentHour})`);
 
   const startOfDay = getLocalStartOfDay(now);

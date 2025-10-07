@@ -56,7 +56,7 @@ export default function RegisterForm() {
 
           <div className="mb-4">
             <label htmlFor="password" className="label">Password</label>
-            <input type="text" name="password" id="password" className="input" />
+            <input type="password" name="password" id="password" className="input" />
           </div>
 
           <div className="flex justify-between items-center">

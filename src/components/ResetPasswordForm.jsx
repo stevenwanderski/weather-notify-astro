@@ -46,7 +46,7 @@ export default function ResetPasswordForm({ token }) {
             <label htmlFor="password" className="label">Password</label>
 
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               className="input"

@@ -8,5 +8,6 @@ export const {
   signOut,
   updateUser,
   requestPasswordReset,
-  resetPassword
+  resetPassword,
+  changePassword
 } = authClient;

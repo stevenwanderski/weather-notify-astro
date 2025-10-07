@@ -1,0 +1,26 @@
+---
+import AccountForm from '@/components/AccountForm';
+import DashboardLayout from '@/layouts/DashboardLayout.astro';
+
+if (!Astro.locals.session) {
+  return Astro.redirect("/login");
+}
+
+const user = Astro.locals.user;
+---
+
+<DashboardLayout>
+  <div class="container mx-auto">
+    <div class="max-w-4xl py-10">
+      <div class="mb-10">
+        <h1 class="font-black text-4xl mb-4">
+          Account
+        </h1>
+      </div>
+
+      <div>
+        <AccountForm client:load user={user} />
+      </div>
+    </div>
+  </div>
+</DashboardLayout>

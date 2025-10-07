@@ -58,7 +58,7 @@ export default function LoginForm() {
             <a href="/register" className="hover:underline text-sm">Create an account</a>
           </div>
 
-          <hr className="border-0 border-b border-zinc-200 mb-6" />
+          <hr className="hr" />
 
           <div className="flex justify-start items-center">
             <a href="/request-password" className="hover:underline text-sm">Forgot password?</a>

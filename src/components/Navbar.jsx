@@ -20,7 +20,8 @@ export default function Navbar({ email }) {
             {email}
           </div>
 
-          <div>
+          <div className="flex items-center gap-8">
+            <a href="/account" className="hover:underline">Account</a>
             <button className="btn !bg-zinc-700" type="button" onClick={logout}>Logout</button>
           </div>
         </div>

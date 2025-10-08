@@ -19,3 +19,7 @@
 .hr {
   @apply border-0 border-b border-zinc-200 mb-6;
 }
+
+.error-text {
+  @apply text-red-500 text-sm;
+}

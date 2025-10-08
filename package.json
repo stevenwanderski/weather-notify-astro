@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/node": "^9.4.4",
     "@astrojs/react": "^4.4.0",
+    "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.16.3",
     "@tailwindcss/vite": "^4.1.14",
     "@types/react": "^19.2.0",
@@ -25,7 +26,8 @@
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.64.0",
     "resend": "^6.1.2",
-    "tailwindcss": "^4.1.14"
+    "tailwindcss": "^4.1.14",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "prisma": "^6.16.3"

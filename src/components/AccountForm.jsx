@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { changePassword } from "@/lib/auth-client";
 import Message from "@/components/Message";
+
+const schema = z
+  .object({
+    currentPassword: z.string().nonempty("Current Password is required"),
+    newPassword: z.string().nonempty("New Password is required"),
+    confirmPassword: z.string().nonempty("Confirm Password is required"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export default function AccountForm({ user }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const { register, handleSubmit, formState, watch, reset } = useForm();
-  const { errors } = formState;
 
-  const newPassword = watch('newPassword');
+  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm({
+    resolver: zodResolver(schema),
+  });
 
   const submit = async (values) => {
     setLoading(true);
@@ -45,11 +58,11 @@ export default function AccountForm({ user }) {
           <div>
             <label htmlFor="currentPassword" className="label mb-1">Current Password</label>
             <input
-              {...register('currentPassword', { required: 'Current Password is required' })}
+              {...register('currentPassword')}
               type="password"
               className="input"
             />
-            {errors.currentPassword && <p className="text-red-500 text-sm mt-1">{errors.currentPassword.message}</p>}
+            {errors.currentPassword && <p className="error-text mt-1">{errors.currentPassword.message}</p>}
           </div>
 
           <hr className="hr" />
@@ -57,26 +70,21 @@ export default function AccountForm({ user }) {
           <div>
             <label htmlFor="newPassword" className="label mb-1">New Password</label>
             <input
-              {...register('newPassword', { required: 'New Password is required' })}
+              {...register('newPassword')}
               type="password"
               className="input"
             />
-            {errors.newPassword && <p className="text-red-500 text-sm mt-1">{errors.newPassword.message}</p>}
+            {errors.newPassword && <p className="error-text mt-1">{errors.newPassword.message}</p>}
           </div>
 
           <div>
             <label htmlFor="confirmPassword" className="label mb-1">Confirm Password</label>
             <input
-              {...register('confirmPassword', {
-                required: 'Confirm Password is required',
-                validate: (value) => {
-                  return value === newPassword || "Passwords do not match";
-                }
-              })}
+              {...register('confirmPassword')}
               type="password"
               className="input"
             />
-            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
+            {errors.confirmPassword && <p className="error-text mt-1">{errors.confirmPassword.message}</p>}
           </div>
 
           <div>

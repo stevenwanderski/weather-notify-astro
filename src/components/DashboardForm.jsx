@@ -1,21 +1,36 @@
 import { useState } from "react";
 import { updateUser } from "@/lib/auth-client";
 import Message from "@/components/Message";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z
+  .object({
+    city: z.string().nonempty("City is required"),
+    time: z.string(),
+    enabled: z.boolean()
+  });
 
 export default function DashboardForm({ user }) {
-  const [city, setCity] = useState(user.city);
-  const [time, setTime] = useState(user.time);
-  const [enabled, setEnabled] = useState(user.notificationsEnabled);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const submit = (event) => {
-    event.preventDefault();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(schema),
 
+    defaultValues: {
+      city: user.city,
+      time: user.time,
+      enabled: user.notificationsEnabled
+    }
+  });
+
+  const submit = (values) => {
     updateUser({
-      city,
-      time,
-      notificationsEnabled: enabled
+      city: values.city,
+      time: values.time,
+      notificationsEnabled: values.enabled
     }, {
       onRequest: (ctx) => {
         setLoading(true);
@@ -28,6 +43,7 @@ export default function DashboardForm({ user }) {
 
       onError: (ctx) => {
         alert(ctx.error.message);
+        reset();
       }
     })
   }
@@ -40,29 +56,23 @@ export default function DashboardForm({ user }) {
     <div>
       {message && <Message text={message} onClose={closeMessage} />}
 
-      <form onSubmit={submit}>
+      <form onSubmit={handleSubmit(submit)}>
         <div className="space-y-8 max-w-[400px]">
           <div>
             <label htmlFor="city" className="label mb-1">City</label>
             <input
-              type="text"
-              id="city"
-              name="city"
+              {...register('city')}
               className="input"
-              defaultValue={user.city}
-              onChange={(e) => setCity(e.target.value)}
             />
+            {errors.city && <p className="error-text mt-1">{errors.city.message}</p>}
           </div>
 
           <div>
             <label htmlFor="time" className="label mb-1">Notification Time (Central Standard Time)</label>
             <div className="grid grid-cols-1">
               <select
-                name="time"
-                id="time"
+                {...register('time')}
                 className="select"
-                onChange={(e) => setTime(e.target.value)}
-                defaultValue={user.time}
               >
                 <option value="0">12:00am</option>
                 <option value="1">1:00am</option>
@@ -101,12 +111,9 @@ export default function DashboardForm({ user }) {
               <span className="size-5 rounded-full bg-white shadow-xs ring-1 ring-gray-900/5 transition-transform duration-200 ease-in-out group-has-checked:translate-x-5"></span>
 
               <input
+                {...register('enabled')}
                 type="checkbox"
-                name="enabled"
-                id="enabled"
                 className="absolute inset-0 appearance-none focus:outline-hidden"
-                defaultChecked={enabled}
-                onChange={(e) => setEnabled(e.target.checked)}
               />
             </div>
 

@@ -16,12 +16,13 @@ export default function Navbar({ email }) {
     <div className="bg-zinc-900">
       <div className="container mx-auto py-4">
         <div className="flex items-center justify-between text-white">
-          <div>
-            {email}
+          <div className="flex gap-8">
+            <a href="/dashboard" className="hover:underline">Dashboard</a>
+            <a href="/account" className="hover:underline">Account</a>
           </div>
 
           <div className="flex items-center gap-8">
-            <a href="/account" className="hover:underline">Account</a>
+            {email}
             <button className="btn !bg-zinc-700" type="button" onClick={logout}>Logout</button>
           </div>
         </div>

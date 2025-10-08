@@ -1,19 +1,28 @@
-import { requestPasswordReset } from "@/lib/auth-client";
 import { useState } from "react";
+import { requestPasswordReset } from "@/lib/auth-client";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z
+  .object({
+    email: z.string().nonempty("Email is required")
+  });
 
 export default function RequestPasswordForm() {
-  const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const [message, setMessage] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const submit = async (event) => {
-    event.preventDefault();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(schema),
+  });
 
+  const submit = async (values) => {
     setLoading(true);
 
     const { data, error } = await requestPasswordReset({
-      email,
+      email: values.email,
       redirectTo: '/reset-password'
     });
 
@@ -22,10 +31,10 @@ export default function RequestPasswordForm() {
     if (!error) {
       setMessage('Check your email for a password reset link.');
     } else {
-      setError(error);
+      setError(error.message);
     }
 
-    setEmail('');
+    reset();
   }
 
   return (
@@ -47,18 +56,15 @@ export default function RequestPasswordForm() {
       )}
 
       <div className="mb-10">
-        <form className="max-w-[400px]" onSubmit={submit}>
+        <form className="max-w-[400px]" onSubmit={handleSubmit(submit)}>
           <div className="mb-4">
             <label htmlFor="email" className="label">Email</label>
-
             <input
-              type="text"
-              name="email"
-              id="email"
+              {...register('email')}
               className="input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <p className="error-text mt-1">{errors.email.message}</p>}
+
           </div>
 
           <div className="flex justify-between items-center mb-6">

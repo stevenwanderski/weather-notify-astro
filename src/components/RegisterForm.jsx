@@ -1,22 +1,29 @@
+import { useState } from "react";
 import { signUp } from "@/lib/auth-client";
 import { navigate } from 'astro:transitions/client';
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z
+  .object({
+    email: z.string().nonempty("Email is required"),
+    password: z.string().nonempty("Password is required")
+  });
 
 export default function RegisterForm() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const submit = (event) => {
-    event.preventDefault();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(schema),
+  });
 
-    const formData = new FormData(event.target);
-    const email = formData.get('email');
-    const password = formData.get('password');
-
+  const submit = (values) => {
     signUp.email({
       name: 'Mick Jagger',
-      email,
-      password,
+      email: values.email,
+      password: values.password,
       callbackURL: "/dashboard"
     }, {
       onRequest: (ctx) => {
@@ -30,7 +37,7 @@ export default function RegisterForm() {
       onError: (ctx) => {
         setError(ctx.error.message);
         setLoading(false);
-        console.log(ctx);
+        reset();
       }
     });
   }
@@ -48,15 +55,24 @@ export default function RegisterForm() {
       )}
 
       <div className="mb-10">
-        <form className="max-w-[400px]" onSubmit={submit}>
+        <form className="max-w-[400px]" onSubmit={handleSubmit(submit)}>
           <div className="mb-4">
             <label htmlFor="email" className="label">Email</label>
-            <input type="text" name="email" id="email" className="input" />
+            <input
+              {...register('email')}
+              className="input"
+            />
+            {errors.email && <p className="error-text mt-1">{errors.email.message}</p>}
           </div>
 
           <div className="mb-4">
             <label htmlFor="password" className="label">Password</label>
-            <input type="password" name="password" id="password" className="input" />
+            <input
+              {...register('password')}
+              className="input"
+              type="password"
+            />
+            {errors.password && <p className="error-text mt-1">{errors.password.message}</p>}
           </div>
 
           <div className="flex justify-between items-center">

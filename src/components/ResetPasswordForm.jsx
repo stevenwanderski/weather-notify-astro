@@ -1,19 +1,28 @@
 import { resetPassword } from "@/lib/auth-client";
 import { navigate } from "astro:transitions/client";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z
+  .object({
+    password: z.string().nonempty("Password is required")
+  });
 
 export default function ResetPasswordForm({ token }) {
-  const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const submit = async (event) => {
-    event.preventDefault();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(schema),
+  });
 
+  const submit = async (values) => {
     setLoading(true);
 
     const { data, error } = await resetPassword({
-      newPassword: password,
+      newPassword: values.password,
       token
     });
 
@@ -22,10 +31,10 @@ export default function ResetPasswordForm({ token }) {
     if (!error) {
       navigate('/dashboard');
     } else {
-      setError(error);
+      setError(error.message);
     }
 
-    setPassword('');
+    reset();
   }
 
   return (
@@ -41,18 +50,15 @@ export default function ResetPasswordForm({ token }) {
       )}
 
       <div className="mb-10">
-        <form className="max-w-[400px]" onSubmit={submit}>
+        <form className="max-w-[400px]" onSubmit={handleSubmit(submit)}>
           <div className="mb-4">
             <label htmlFor="password" className="label">Password</label>
-
             <input
-              type="password"
-              name="password"
-              id="password"
+              {...register('password')}
               className="input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              type="password"
             />
+            {errors.password && <p className="error-text mt-1">{errors.password.message}</p>}
           </div>
 
           <div className="flex justify-between items-center mb-6">

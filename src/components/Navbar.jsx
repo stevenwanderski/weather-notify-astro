@@ -9,11 +9,6 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ email, pathname }) {
-  const navigation = [
-    { name: 'Dashboard', href: '/dashboard', current: pathname == '/dashboard' },
-    { name: 'Account', href: '/account', current: pathname == '/account' }
-  ]
-
   const logout = () => {
     signOut({
       fetchOptions: {
@@ -39,11 +34,11 @@ export default function Navbar({ email, pathname }) {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-white/5 hover:text-white" */}
-                <a href="#" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">
+                <a href="/dashboard" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">
                   Dashboard
                 </a>
                 <a
-                  href="#"
+                  href="/account"
                   className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white"
                 >
                   Account

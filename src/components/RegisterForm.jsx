@@ -9,7 +9,12 @@ import cloudy from '@/assets/cloudy.png';
 const schema = z
   .object({
     email: z.string().nonempty("Email is required"),
-    password: z.string().nonempty("Password is required")
+    password: z.string().nonempty("Password is required"),
+    confirmPassword: z.string().nonempty("Confirm Password is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
   });
 
 export default function RegisterForm() {
@@ -78,6 +83,16 @@ export default function RegisterForm() {
                 type="password"
               />
               {errors.password && <p className="error-text mt-1">{errors.password.message}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword" className="label">Confirm Password</label>
+              <input
+                {...register('confirmPassword')}
+                className="input"
+                type="password"
+              />
+              {errors.confirmPassword && <p className="error-text mt-1">{errors.confirmPassword.message}</p>}
             </div>
 
             <div>

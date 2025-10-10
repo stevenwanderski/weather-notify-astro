@@ -10,21 +10,19 @@ const user = Astro.locals.user;
 ---
 
 <DashboardLayout>
-  <div class="container mx-auto">
-    <div class="max-w-4xl py-10">
-      <div class="mb-10">
-        <h1 class="font-black text-4xl mb-4">
-          Welcome! 👋
-        </h1>
+  <div class="max-w-4xl py-10">
+    <div class="mb-10">
+      <h1 class="font-black text-4xl mb-4">
+        Welcome! 👋
+      </h1>
 
-        <p class="text-xl max-w-[600px]">
-          Manage your daily weather notifications by adding your city and preferences here.
-        </p>
-      </div>
+      <p class="text-xl max-w-[600px]">
+        Manage your daily weather notifications by adding your city and preferences here.
+      </p>
+    </div>
 
-      <div>
-        <DashboardForm user={user} client:load />
-      </div>
+    <div>
+      <DashboardForm user={user} client:load />
     </div>
   </div>
 </DashboardLayout>

@@ -21,20 +21,16 @@ export default function DashboardForm({ user }) {
     resolver: zodResolver(schema)
   });
 
-  // when `user` prop changes (or on mount), reset form values to avoid initial empty render
   useEffect(() => {
-    // only reset if user is defined
     if (user) {
       reset({
         city: user.city ?? '',
         time: user.time ?? '',
         enabled: typeof user.notificationsEnabled === 'boolean' ? user.notificationsEnabled : true,
       });
-      // small microtask tick to ensure react-hook-form has applied values before first paint
-      // set initialized to true so we render the actual form
+
       setInitialized(true);
     }
-  // we only want to run when `user` changes
   }, [user, reset]);
 
   const submit = (values) => {
@@ -63,12 +59,19 @@ export default function DashboardForm({ user }) {
     setMessage('');
   }
 
+  if (!initialized) {
+    return (
+      <div>
+        Loading...
+      </div>
+    )
+  }
+
   return (
     <div>
       {message && <Message text={message} onClose={closeMessage} />}
 
-      {initialized && (
-        <form onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(submit)}>
         <div className="space-y-8 max-w-[400px]">
           <div>
             <label htmlFor="city" className="label mb-1">City</label>
@@ -138,8 +141,7 @@ export default function DashboardForm({ user }) {
               <button className="btn" disabled={loading}>Save</button>
           </div>
         </div>
-          </form>
-        )}
+      </form>
     </div>
   )
 }

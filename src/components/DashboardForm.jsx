@@ -60,11 +60,7 @@ export default function DashboardForm({ user }) {
   }
 
   if (!initialized) {
-    return (
-      <div>
-        Loading...
-      </div>
-    )
+    return null;
   }
 
   return (

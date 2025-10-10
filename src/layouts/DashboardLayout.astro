@@ -2,7 +2,7 @@
 import "@/styles/global.css";
 import Navbar from "@/components/Navbar";
 
-const { email } = Astro.locals.user;
+const { user } = Astro.locals;
 ---
 
 <!doctype html>
@@ -15,7 +15,7 @@ const { email } = Astro.locals.user;
     <title>Sky Brief | Daily Weather Notifications</title>
   </head>
   <body>
-    <Navbar email={email} client:load />
+    <Navbar email={user?.email} client:load />
 
     <slot />
   </body>

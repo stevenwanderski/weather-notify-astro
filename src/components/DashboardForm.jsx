@@ -123,6 +123,7 @@ export default function DashboardForm({ user }) {
 
               <input
                 {...register('enabled')}
+                id="enabled"
                 type="checkbox"
                 className="absolute inset-0 appearance-none focus:outline-hidden"
               />

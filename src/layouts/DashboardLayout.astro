@@ -18,7 +18,7 @@ const { pathname } = Astro.url;
   <body>
     <Navbar email={user?.email} pathname={pathname} client:load />
 
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl px-2 px-8">
       <slot />
     </div>
   </body>

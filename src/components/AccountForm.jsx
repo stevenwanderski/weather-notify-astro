@@ -37,7 +37,7 @@ export default function AccountForm({ user }) {
     if (!error) {
       setMessage('Password has been updated.');
     } else {
-      setError(error);
+      alert(error);
     }
 
     setMessage('Password has been updated.');

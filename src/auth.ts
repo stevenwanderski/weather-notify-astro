@@ -24,7 +24,8 @@ export const auth = betterAuth({
   },
 
   trustedOrigins: [
-    "http://localhost:4321"
+    "http://localhost:4321",
+    "https://skybrief.app"
   ],
 
   user: {

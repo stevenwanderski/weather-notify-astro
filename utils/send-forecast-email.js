@@ -23,16 +23,34 @@ export async function sendForecastEmail(email, city) {
     city: forecast.city,
     hours: forecast.hours
   });
+
   const html = juice(rawHtml);
 
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const { data, error } = await resend.emails.send({
-    from: 'Sky Brief <hello@skybrief.app>',
-    to: [email],
-    subject: `Weather Forecast for ${city} - ${formattedDate}`,
-    html: html
-  });
+  try {
+    const res = await resend.emails.send({
+      from: 'Sky Brief <hello@skybrief.app>',
+      to: [email],
+      subject: `Weather Forecast for ${city} - ${formattedDate}`,
+      html: html
+    });
+
+    // Some SDKs return an object with an `error` field instead of throwing.
+    if (res && res.error) {
+      const errMsg = res.error.message || JSON.stringify(res.error);
+      const err = new Error(`Resend error: ${errMsg}`);
+      // attach original response for debugging
+      err.response = res;
+      throw err;
+    }
+
+    return res;
+  } catch (err) {
+    // bubble up so callers (cron.js) can catch and handle failures
+    console.error('Error sending forecast email to', email, err);
+    throw err;
+  }
 }
 
 function formatLocalDate(dateStr) {

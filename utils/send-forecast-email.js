@@ -28,7 +28,7 @@ export async function sendForecastEmail(email, city) {
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { data, error } = await resend.emails.send({
-    from: 'Weather Notify <weather-notify@resend.dev>',
+    from: 'Sky Brief <hello@skybrief.app>',
     to: [email],
     subject: `Weather Forecast for ${city} - ${formattedDate}`,
     html: html
